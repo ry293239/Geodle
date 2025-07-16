@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Geodle - Daily Geo Guessing Game</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 1rem; }
+    #clue { font-size: 1.2rem; margin-bottom: 1rem; }
+    #guessInput { width: 80%; padding: 0.5rem; font-size: 1rem; }
+    #submitGuess { padding: 0.5rem 1rem; font-size: 1rem; }
+    #guessesList { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <h1>Geodle</h1>
+  <div id="clue">Clue will appear here</div>
+
+  <input id="guessInput" placeholder="Enter your guess..." autocomplete="off" />
+  <button id="submitGuess">Submit Guess</button>
+
+  <div id="guessesList"></div>
+
+  <script>
+    const clues = [
+      "Continent: Guess the continent",
+      "Satellite image clue",
+      "Last letter of the country name",
+      // Add more clues here...
+    ];
+
+    let currentClueIndex = 0;
+    let guesses = [];
+
+    function updateClue() {
+      document.getElementById("clue").textContent = clues[currentClueIndex];
+    }
+
+    function addGuess(guess) {
+      guesses.push({ clueIndex: currentClueIndex, guess });
+      const guessList = document.getElementById("guessesList");
+      const newGuess = document.createElement("div");
+      newGuess.textContent = `Clue ${currentClueIndex + 1}: ${guess}`;
+      guessList.appendChild(newGuess);
+      currentClueIndex++;
+      if (currentClueIndex < clues.length) {
+        updateClue();
+      } else {
+        alert("Game over! Thanks for playing.");
+      }
+    }
+
+    document.getElementById("submitGuess").onclick = () => {
+      const input = document.getElementById("guessInput");
+      const guess = input.value.trim();
+      if (!guess) return alert("Please enter a guess.");
+      addGuess(guess);
+      input.value = "";
+    };
+
+    // Initialize game
+    updateClue();
+  </script>
+</body>
+</html>
